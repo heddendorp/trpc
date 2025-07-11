@@ -1,7 +1,7 @@
 {
   "name": "@trpc/tanstack-angular-query",
   "type": "module",
-  "version": "11.4.3",
+  "version": "11.5.0",
   "description": "TanStack Angular Query Integration for tRPC",
   "author": "tRPC Team",
   "license": "MIT",
@@ -52,21 +52,20 @@
     }
   },
   "peerDependencies": {
-    "@tanstack/angular-query-experimental": ">=5.80.3",
-    "@trpc/client": "11.4.3",
-    "@trpc/server": "11.4.3",
     "@angular/core": ">=16.0.0",
+    "@tanstack/angular-query-experimental": ">=5.80.3",
+    "@trpc/client": "11.5.0",
+    "@trpc/server": "11.5.0",
     "typescript": ">=5.7.2"
   },
   "devDependencies": {
-    "@tanstack/angular-query-experimental": ">=5.80.3",
-    "@trpc/client": "11.4.3",
-    "@trpc/server": "11.4.3",
-    "@angular/core": "^18.0.0",
     "@angular/common": "^18.0.0",
+    "@angular/core": "^18.0.0",
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
-    "@angular/testing": "^18.0.0",
+    "@tanstack/angular-query-experimental": ">=5.80.3",
+    "@trpc/client": "11.5.0",
+    "@trpc/server": "11.5.0",
     "@types/node": "^22.13.5",
     "eslint": "^9.26.0",
     "jsdom": "^25.0.0",
