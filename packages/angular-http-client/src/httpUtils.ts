@@ -44,12 +44,12 @@ export function getTransformer(
   transformer: AnyClientTypes['transformer'],
 ): CombinedDataTransformer {
   const serializer = transformer?.input ?? {
-    serialize: (v) => v,
-    deserialize: (v) => v,
+    serialize: (v: any) => v,
+    deserialize: (v: any) => v,
   };
   const deserializer = transformer?.output ?? {
-    serialize: (v) => v,
-    deserialize: (v) => v,
+    serialize: (v: any) => v,
+    deserialize: (v: any) => v,
   };
 
   return {

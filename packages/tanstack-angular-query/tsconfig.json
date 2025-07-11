@@ -1,7 +1,17 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "test"],
   "compilerOptions": {
-    "noErrorTruncation": true
-  }
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noErrorTruncation": true,
+    "outDir": "dist"
+  },
+  "include": ["src", "test"],
+  "exclude": ["dist", "node_modules"]
 }
