@@ -44,7 +44,6 @@ interface AngularHttpHeaders {
   append(name: string, value: string | string[]): AngularHttpHeaders;
   set(name: string, value: string | string[]): AngularHttpHeaders;
   delete(name: string, value?: string | string[]): AngularHttpHeaders;
-  [Symbol.iterator](): IterableIterator<[string, string[]]>;
 }
 
 interface AngularObservable<T> {
@@ -115,20 +114,24 @@ function angularHttpRequester(
     // Build the URL with query parameters for GET requests
     const urlWithParams = getUrl({
       ...opts,
+      input: opts.input || undefined,
       transformer: opts.transformer,
     });
 
     // Convert headers to Angular format
     const angularHeaders: Record<string, string> = {};
     if (opts.headers) {
-      if (Symbol.iterator in opts.headers) {
+      // Check if headers is iterable
+      if (opts.headers && typeof opts.headers === 'object' && 
+          typeof (opts.headers as any)[Symbol?.iterator] === 'function') {
         // Handle iterable headers
-        for (const [key, value] of opts.headers) {
+        for (const [key, value] of opts.headers as any) {
           angularHeaders[key] = value;
         }
       } else {
         // Handle object headers
-        for (const [key, value] of Object.entries(opts.headers)) {
+        const headerObj = opts.headers as Record<string, string | string[]>;
+        for (const [key, value] of Object.entries(headerObj)) {
           if (typeof value === 'string') {
             angularHeaders[key] = value;
           } else if (Array.isArray(value)) {
@@ -158,7 +161,7 @@ function angularHttpRequester(
       let body: string | undefined;
       if (opts.type !== 'query' || opts.methodOverride === 'POST') {
         const input = getInput({
-          input: opts.input,
+          input: opts.input || undefined,
           transformer: opts.transformer,
         });
         body = input !== undefined ? JSON.stringify(input) : undefined;
@@ -166,7 +169,7 @@ function angularHttpRequester(
       request = httpClient.post(urlWithParams, body, requestOptions);
     } else if (method === 'PATCH') {
       const input = getInput({
-        input: opts.input,
+        input: opts.input || undefined,
         transformer: opts.transformer,
       });
       const body = input !== undefined ? JSON.stringify(input) : undefined;

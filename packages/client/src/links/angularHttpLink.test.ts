@@ -6,34 +6,34 @@ import { angularHttpLink } from './angularHttpLink';
 
 // Mock Angular HttpClient
 interface MockAngularHttpClient {
-  get: jest.Mock;
-  post: jest.Mock;
-  patch: jest.Mock;
-  put: jest.Mock;
-  delete: jest.Mock;
-  head: jest.Mock;
-  options: jest.Mock;
-  request: jest.Mock;
+  get: ReturnType<typeof vi.fn>;
+  post: ReturnType<typeof vi.fn>;
+  patch: ReturnType<typeof vi.fn>;
+  put: ReturnType<typeof vi.fn>;
+  delete: ReturnType<typeof vi.fn>;
+  head: ReturnType<typeof vi.fn>;
+  options: ReturnType<typeof vi.fn>;
+  request: ReturnType<typeof vi.fn>;
 }
 
 interface MockAngularObservable<T> {
-  subscribe: jest.Mock;
+  subscribe: ReturnType<typeof vi.fn>;
 }
 
 interface MockAngularSubscription {
-  unsubscribe: jest.Mock;
+  unsubscribe: ReturnType<typeof vi.fn>;
 }
 
 function createMockAngularHttpClient(): MockAngularHttpClient {
   return {
-    get: jest.fn(),
-    post: jest.fn(),
-    patch: jest.fn(),
-    put: jest.fn(),
-    delete: jest.fn(),
-    head: jest.fn(),
-    options: jest.fn(),
-    request: jest.fn(),
+    get: vi.fn(),
+    post: vi.fn(),
+    patch: vi.fn(),
+    put: vi.fn(),
+    delete: vi.fn(),
+    head: vi.fn(),
+    options: vi.fn(),
+    request: vi.fn(),
   };
 }
 
@@ -42,11 +42,11 @@ function createMockAngularObservable<T>(
   error?: any,
 ): MockAngularObservable<T> {
   const subscription: MockAngularSubscription = {
-    unsubscribe: jest.fn(),
+    unsubscribe: vi.fn(),
   };
 
   return {
-    subscribe: jest.fn((observerOrNext, errorFn, completeFn) => {
+    subscribe: vi.fn((observerOrNext, errorFn, completeFn) => {
       const observer = typeof observerOrNext === 'function' 
         ? { next: observerOrNext, error: errorFn, complete: completeFn }
         : observerOrNext;
@@ -90,7 +90,7 @@ describe('angularHttpLink', () => {
 
   beforeEach(() => {
     mockHttpClient = createMockAngularHttpClient();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should perform a GET request for queries', async () => {
