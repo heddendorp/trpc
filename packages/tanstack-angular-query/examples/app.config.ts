@@ -1,7 +1,10 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
+import {
+  provideTanStackQuery,
+  QueryClient,
+} from '@tanstack/angular-query-experimental';
 import { provideTRPC } from '@trpc/tanstack-angular-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from './server/router';
@@ -14,7 +17,7 @@ const trpcClient = createTRPCClient<AppRouter>({
       // Optional: Add headers, custom fetch, etc.
       headers: () => {
         return {
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
         };
       },
     }),
@@ -28,17 +31,19 @@ export const appConfig: ApplicationConfig = {
       // Your routes here
     ]),
     provideHttpClient(),
-    
+
     // TanStack Query provider
-    provideTanStackQuery(new QueryClient({
-      defaultOptions: {
-        queries: {
-          staleTime: 5 * 60 * 1000, // 5 minutes
-          cacheTime: 10 * 60 * 1000, // 10 minutes
+    provideTanStackQuery(
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 5 * 60 * 1000, // 5 minutes
+            cacheTime: 10 * 60 * 1000, // 10 minutes
+          },
         },
-      },
-    })),
-    
+      }),
+    ),
+
     // tRPC provider
     provideTRPC(trpcClient),
   ],

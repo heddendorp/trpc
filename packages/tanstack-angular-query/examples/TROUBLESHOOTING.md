@@ -47,7 +47,10 @@ const trpcClient = createTRPCClient<AppRouter>({
 ```typescript
 // app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
+import {
+  provideTanStackQuery,
+  QueryClient,
+} from '@tanstack/angular-query-experimental';
 import { provideTRPC } from '@trpc/tanstack-angular-query';
 
 export const appConfig: ApplicationConfig = {
@@ -82,9 +85,9 @@ import type { AppRouter } from './server/router';
 })
 export class ExampleComponent {
   private trpc = injectTRPC<AppRouter>();
-  
-  greeting = injectQuery(() => 
-    this.trpc.greeting.queryOptions({ name: 'World' })
+
+  greeting = injectQuery(() =>
+    this.trpc.greeting.queryOptions({ name: 'World' }),
   );
 }
 ```

@@ -35,7 +35,9 @@ export interface ResolvedHTTPLinkOptions {
 }
 
 // Copy of TransformerOptions type from client package
-export type TransformerOptions<TRoot extends Pick<AnyClientTypes, 'transformer'>> = {
+export type TransformerOptions<
+  TRoot extends Pick<AnyClientTypes, 'transformer'>,
+> = {
   transformer?: TRoot['transformer'];
 };
 

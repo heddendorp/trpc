@@ -4,7 +4,10 @@ import { Component } from '@angular/core';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
-import { QueryClient, provideTanStackQuery } from '@tanstack/angular-query-experimental';
+import {
+  QueryClient,
+  provideTanStackQuery,
+} from '@tanstack/angular-query-experimental';
 import { createTRPCOptionsProxy } from '../src/internals/createOptionsProxy';
 import { provideTRPC, injectTRPC, createTRPCInjectors } from '../src/index';
 
@@ -18,7 +21,10 @@ const appRouter = t.router({
     }),
   user: t.router({
     list: t.procedure.query(() => {
-      return [{ id: 1, name: 'John' }, { id: 2, name: 'Jane' }];
+      return [
+        { id: 1, name: 'John' },
+        { id: 2, name: 'Jane' },
+      ];
     }),
     create: t.procedure
       .input(z.object({ name: z.string() }))
@@ -44,9 +50,9 @@ describe('createTRPCOptionsProxy', () => {
       links: [httpBatchLink({ url: '/trpc' })],
     });
     const queryClient = new QueryClient();
-    
+
     const proxy = createTRPCOptionsProxy({ client: mockClient, queryClient });
-    
+
     expect(proxy).toBeDefined();
     expect(proxy.greeting).toBeDefined();
     expect(proxy.user).toBeDefined();
@@ -77,7 +83,7 @@ describe('Angular integration', () => {
         mutations: { retry: false },
       },
     });
-    
+
     trpcClient = createTRPCClient<AppRouter>({
       links: [httpBatchLink({ url: '/trpc' })],
     });
@@ -92,10 +98,7 @@ describe('Angular integration', () => {
     }
 
     TestBed.configureTestingModule({
-      providers: [
-        provideTanStackQuery(queryClient),
-        provideTRPC(trpcClient),
-      ],
+      providers: [provideTanStackQuery(queryClient), provideTRPC(trpcClient)],
     });
 
     const fixture = TestBed.createComponent(TestComponent);
@@ -117,17 +120,16 @@ describe('Angular integration', () => {
     }
 
     TestBed.configureTestingModule({
-      providers: [
-        provideTanStackQuery(queryClient),
-        provideTRPC(trpcClient),
-      ],
+      providers: [provideTanStackQuery(queryClient), provideTRPC(trpcClient)],
     });
 
     const fixture = TestBed.createComponent(TestComponent);
     const component = fixture.componentInstance;
 
-    const greetingOptions = component.trpc.greeting.queryOptions({ name: 'World' });
-    
+    const greetingOptions = component.trpc.greeting.queryOptions({
+      name: 'World',
+    });
+
     expect(greetingOptions).toBeDefined();
     expect(greetingOptions.queryKey).toBeDefined();
     expect(greetingOptions.queryFn).toBeDefined();
@@ -143,17 +145,14 @@ describe('Angular integration', () => {
     }
 
     TestBed.configureTestingModule({
-      providers: [
-        provideTanStackQuery(queryClient),
-        provideTRPC(trpcClient),
-      ],
+      providers: [provideTanStackQuery(queryClient), provideTRPC(trpcClient)],
     });
 
     const fixture = TestBed.createComponent(TestComponent);
     const component = fixture.componentInstance;
 
     const createUserOptions = component.trpc.user.create.mutationOptions();
-    
+
     expect(createUserOptions).toBeDefined();
     expect(createUserOptions.mutationKey).toBeDefined();
     expect(createUserOptions.mutationFn).toBeDefined();
@@ -161,8 +160,10 @@ describe('Angular integration', () => {
   });
 
   it('should work with createTRPCInjectors for typed injection', () => {
-    const { injectTRPC: injectTypedTRPC, injectTRPCClient: injectTypedTRPCClient } = 
-      createTRPCInjectors<AppRouter>();
+    const {
+      injectTRPC: injectTypedTRPC,
+      injectTRPCClient: injectTypedTRPCClient,
+    } = createTRPCInjectors<AppRouter>();
 
     @Component({
       template: '',
@@ -173,10 +174,7 @@ describe('Angular integration', () => {
     }
 
     TestBed.configureTestingModule({
-      providers: [
-        provideTanStackQuery(queryClient),
-        provideTRPC(trpcClient),
-      ],
+      providers: [provideTanStackQuery(queryClient), provideTRPC(trpcClient)],
     });
 
     const fixture = TestBed.createComponent(TestComponent);

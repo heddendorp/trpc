@@ -1,4 +1,9 @@
-export { provideTRPC, injectTRPC, injectTRPCClient, createTRPCInjectors } from './internals/context';
+export {
+  provideTRPC,
+  injectTRPC,
+  injectTRPCClient,
+  createTRPCInjectors,
+} from './internals/context';
 export type {
   TRPCOptionsProxy,
   inferInput,

@@ -6,7 +6,10 @@ import type {
   UndefinedInitialDataInfiniteOptions,
   UnusedSkipTokenInfiniteOptions,
 } from '@tanstack/angular-query-experimental';
-import { infiniteQueryOptions, skipToken } from '@tanstack/angular-query-experimental';
+import {
+  infiniteQueryOptions,
+  skipToken,
+} from '@tanstack/angular-query-experimental';
 import type { TRPCClientErrorLike, TRPCUntypedClient } from '@trpc/client';
 import type { DistributiveOmit } from '@trpc/server/unstable-core-do-not-import';
 import type {

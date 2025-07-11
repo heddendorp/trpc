@@ -1,4 +1,8 @@
-import type { MutationFunction, QueryClient, CreateMutationOptions } from '@tanstack/angular-query-experimental';
+import type {
+  MutationFunction,
+  QueryClient,
+  CreateMutationOptions,
+} from '@tanstack/angular-query-experimental';
 import type { TRPCClientErrorLike, TRPCUntypedClient } from '@trpc/client';
 import type {
   DistributiveOmit,
@@ -10,10 +14,7 @@ import type {
   TRPCQueryBaseOptions,
   TRPCQueryOptionsResult,
 } from './types';
-import {
-  createTRPCOptionsResult,
-  getClientArgs,
-} from './utils';
+import { createTRPCOptionsResult, getClientArgs } from './utils';
 
 type ReservedOptions = 'mutationKey' | 'mutationFn';
 

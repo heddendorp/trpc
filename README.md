@@ -17,7 +17,7 @@ An Angular HttpClient link for tRPC client that allows you to use Angular's Http
 
 - **Location**: `packages/angular-http-client`
 - **Main Purpose**: Provides HTTP transport for tRPC client using Angular's HttpClient
-- **Peer Dependencies**: 
+- **Peer Dependencies**:
   - `@angular/common >=16.0.0`
   - `@angular/core >=16.0.0`
   - `@trpc/client 11.4.3`
@@ -30,7 +30,7 @@ TanStack Angular Query Integration for tRPC that provides reactive query capabil
 
 - **Location**: `packages/tanstack-angular-query`
 - **Main Purpose**: Integrates tRPC with TanStack Angular Query for reactive data fetching
-- **Peer Dependencies**: 
+- **Peer Dependencies**:
   - `@angular/core >=16.0.0`
   - `@tanstack/angular-query-experimental >=5.80.3`
   - `@trpc/client 11.4.3`
@@ -67,6 +67,28 @@ pnpm test
 pnpm publish
 ```
 
+## Context7 Integration
+
+This project is configured to work with Context7, an AI documentation tool. The `context7.json` file defines how AI coding assistants should interpret and use this project's documentation.
+
+### Using with Context7
+
+When working with AI coding assistants that support Context7, you can reference this project by:
+
+1. **Using the library name**: Mention "tRPC Angular packages" or "heddendorp angular trpc" in your prompts
+2. **Using the direct library ID**: Use `/heddendorp/trpc` if available in the Context7 registry
+3. **Adding "use context7"** to your prompts to get up-to-date documentation
+
+### Examples
+
+```
+Create an Angular service that uses tRPC with HttpClient. use context7
+```
+
+```
+Set up TanStack Angular Query with tRPC in an Angular 16+ app. use context7
+```
+
 ## GitHub Actions
 
 The repository includes a simplified CI/CD pipeline:
@@ -98,6 +120,7 @@ This repository has been significantly simplified from the original tRPC reposit
 ## License
 
 MIT
+
 - 🐻&nbsp; Easy to add to your existing brownfield project.
 - 🔋&nbsp; Batteries included - React.js/Next.js/Express.js/Fastify adapters. _(But tRPC is not tied to React, and there are many [community adapters](https://trpc.io/docs/awesome-trpc#-extensions--community-add-ons) for other libraries)_
 - 🥃&nbsp; Subscriptions support.

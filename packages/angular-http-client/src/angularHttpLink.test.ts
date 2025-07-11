@@ -46,9 +46,10 @@ function createMockAngularObservable<T>(
 
   return {
     subscribe: vi.fn((observerOrNext, errorFn, completeFn) => {
-      const observer = typeof observerOrNext === 'function' 
-        ? { next: observerOrNext, error: errorFn, complete: completeFn }
-        : observerOrNext;
+      const observer =
+        typeof observerOrNext === 'function'
+          ? { next: observerOrNext, error: errorFn, complete: completeFn }
+          : observerOrNext;
 
       setTimeout(() => {
         if (error) {
@@ -74,13 +75,12 @@ describe('angularHttpLink', () => {
     greeting: t.procedure
       .input(z.object({ name: z.string() }))
       .mutation(({ input }) => `Greetings ${input.name}!`),
-    error: t.procedure
-      .query(() => {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Something went wrong',
-        });
-      }),
+    error: t.procedure.query(() => {
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Something went wrong',
+      });
+    }),
   });
 
   type Router = typeof router;
@@ -210,7 +210,7 @@ describe('angularHttpLink', () => {
           url: 'http://localhost:3000',
           httpClient: mockHttpClient as any,
           headers: {
-            'Authorization': 'Bearer token123',
+            Authorization: 'Bearer token123',
             'X-Custom-Header': 'custom-value',
           },
         }),
@@ -223,7 +223,7 @@ describe('angularHttpLink', () => {
       expect.stringContaining('http://localhost:3000/hello'),
       expect.objectContaining({
         headers: expect.objectContaining({
-          'Authorization': 'Bearer token123',
+          Authorization: 'Bearer token123',
           'X-Custom-Header': 'custom-value',
         }),
         observe: 'response',
@@ -251,7 +251,7 @@ describe('angularHttpLink', () => {
           url: 'http://localhost:3000',
           httpClient: mockHttpClient as any,
           headers: () => ({
-            'Authorization': 'Bearer dynamic-token',
+            Authorization: 'Bearer dynamic-token',
           }),
         }),
       ],
@@ -263,7 +263,7 @@ describe('angularHttpLink', () => {
       expect.stringContaining('http://localhost:3000/hello'),
       expect.objectContaining({
         headers: expect.objectContaining({
-          'Authorization': 'Bearer dynamic-token',
+          Authorization: 'Bearer dynamic-token',
         }),
         observe: 'response',
         responseType: 'json',
