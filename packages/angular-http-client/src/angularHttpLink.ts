@@ -6,14 +6,14 @@ import type {
 } from '@trpc/server/unstable-core-do-not-import';
 import { transformResult } from '@trpc/server/unstable-core-do-not-import';
 import { TRPCClientError } from '@trpc/client';
-import type { HTTPLinkBaseOptions } from '@trpc/client/unstable-internals';
+import type { HTTPHeaders, Operation, TRPCLink } from '@trpc/client';
 import {
   getInput,
   getUrl,
   resolveHTTPLinkOptions,
   type HTTPResult,
-} from '@trpc/client/unstable-internals';
-import type { HTTPHeaders, Operation, TRPCLink } from '@trpc/client';
+  type HTTPLinkBaseOptions,
+} from './httpUtils';
 
 // Angular HttpClient interfaces (minimal definitions needed)
 interface AngularHttpClient {
