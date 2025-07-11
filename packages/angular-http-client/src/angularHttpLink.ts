@@ -111,7 +111,6 @@ export type AngularHttpLinkOptions<TRoot extends AnyClientTypes> =
     httpClient: AngularHttpClient;
     /**
      * Headers to be set on outgoing requests or a callback that returns said headers
-     * @see http://trpc.io/docs/client/headers
      */
     headers?:
       | HTTPHeaders
@@ -310,7 +309,7 @@ function angularHttpRequester(
 }
 
 /**
- * @see https://trpc.io/docs/client/links/httpLink
+ * Angular HttpClient link for tRPC client
  */
 export function angularHttpLink<TRouter extends AnyRouter = AnyRouter>(
   opts: AngularHttpLinkOptions<TRouter['_def']['_config']['$types']>,

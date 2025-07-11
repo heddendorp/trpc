@@ -1,9 +1,9 @@
 {
   "name": "@heddendorp/angular-http-client",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Angular HttpClient link for tRPC client",
-  "author": "KATT",
+  "author": "heddendorp",
   "license": "MIT",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -64,8 +64,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "funding": [
-    "https://trpc.io/sponsor"
-  ]
+  }
 }

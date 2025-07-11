@@ -22,7 +22,7 @@ export const TRPC_OPTIONS_PROXY = new InjectionToken<
 /**
  * Provides tRPC client and options proxy for Angular applications
  *
- * @see https://trpc.io/docs/client/tanstack-angular-query/setup
+
  */
 export function provideTRPC<TRouter extends AnyTRPCRouter>(
   client: TRPCClient<TRouter>,
