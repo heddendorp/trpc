@@ -108,4 +108,10 @@ The repository is structured as a monorepo with:
 
 ## Star History
 
-<a href="https://star-history.com/#heddendorp/trpc"><img src="https://api.star-history.com/svg?repos=heddendorp/trpc&type=Date" alt="Star History Chart" width="600" /></a>
+<a href="https://www.star-history.com/#heddendorp/trpc&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=heddendorp/trpc&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=heddendorp/trpc&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=heddendorp/trpc&type=Date" />
+ </picture>
+</a>
