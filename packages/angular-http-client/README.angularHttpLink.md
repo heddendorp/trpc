@@ -27,11 +27,11 @@ import { Injectable, inject } from '@angular/core';
 import { createTRPCClient, angularHttpLink } from '@trpc/client';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrpcService {
   private httpClient = inject(HttpClient);
-  
+
   private client = createTRPCClient<AppRouter>({
     links: [
       angularHttpLink({
@@ -72,15 +72,19 @@ Replace `httpLink` with `angularHttpLink` and add the `httpClient` parameter:
 // Before
 httpLink({
   url: 'http://localhost:3000/trpc',
-  headers: { /* ... */ },
-})
+  headers: {
+    /* ... */
+  },
+});
 
 // After
 angularHttpLink({
   url: 'http://localhost:3000/trpc',
   httpClient: this.httpClient,
-  headers: { /* ... */ },
-})
+  headers: {
+    /* ... */
+  },
+});
 ```
 
 ## Testing

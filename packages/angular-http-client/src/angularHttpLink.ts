@@ -18,18 +18,50 @@ import {
 // Angular HttpClient interfaces (minimal definitions needed)
 interface AngularHttpClient {
   get<T = any>(url: string, options?: AngularHttpOptions): AngularObservable<T>;
-  post<T = any>(url: string, body: any, options?: AngularHttpOptions): AngularObservable<T>;
-  put<T = any>(url: string, body: any, options?: AngularHttpOptions): AngularObservable<T>;
-  patch<T = any>(url: string, body: any, options?: AngularHttpOptions): AngularObservable<T>;
-  delete<T = any>(url: string, options?: AngularHttpOptions): AngularObservable<T>;
-  head<T = any>(url: string, options?: AngularHttpOptions): AngularObservable<T>;
-  options<T = any>(url: string, options?: AngularHttpOptions): AngularObservable<T>;
-  request<T = any>(method: string, url: string, options?: AngularHttpOptions & { body?: any }): AngularObservable<T>;
+  post<T = any>(
+    url: string,
+    body: any,
+    options?: AngularHttpOptions,
+  ): AngularObservable<T>;
+  put<T = any>(
+    url: string,
+    body: any,
+    options?: AngularHttpOptions,
+  ): AngularObservable<T>;
+  patch<T = any>(
+    url: string,
+    body: any,
+    options?: AngularHttpOptions,
+  ): AngularObservable<T>;
+  delete<T = any>(
+    url: string,
+    options?: AngularHttpOptions,
+  ): AngularObservable<T>;
+  head<T = any>(
+    url: string,
+    options?: AngularHttpOptions,
+  ): AngularObservable<T>;
+  options<T = any>(
+    url: string,
+    options?: AngularHttpOptions,
+  ): AngularObservable<T>;
+  request<T = any>(
+    method: string,
+    url: string,
+    options?: AngularHttpOptions & { body?: any },
+  ): AngularObservable<T>;
 }
 
 interface AngularHttpOptions {
   headers?: Record<string, string | string[]> | AngularHttpHeaders;
-  params?: Record<string, string | string[] | number | boolean | ReadonlyArray<string | number | boolean>>;
+  params?: Record<
+    string,
+    | string
+    | string[]
+    | number
+    | boolean
+    | ReadonlyArray<string | number | boolean>
+  >;
   observe?: 'body' | 'response' | 'events';
   responseType?: 'json' | 'text' | 'blob' | 'arraybuffer';
   reportProgress?: boolean;
@@ -110,7 +142,7 @@ function angularHttpRequester(
 ): Promise<HTTPResult> {
   return new Promise((resolve, reject) => {
     const method = opts.methodOverride ?? METHOD[opts.type];
-    
+
     // Build the URL with query parameters for GET requests
     const urlWithParams = getUrl({
       ...opts,
@@ -123,8 +155,11 @@ function angularHttpRequester(
     const angularHeaders: Record<string, string> = {};
     if (opts.headers) {
       // Check if headers is iterable
-      if (opts.headers && typeof opts.headers === 'object' && 
-          typeof (opts.headers as any)[Symbol?.iterator] === 'function') {
+      if (
+        opts.headers &&
+        typeof opts.headers === 'object' &&
+        typeof (opts.headers as any)[Symbol?.iterator] === 'function'
+      ) {
         // Handle iterable headers
         for (const [key, value] of opts.headers as any) {
           angularHeaders[key] = value;
@@ -234,12 +269,18 @@ function angularHttpRequester(
                 message: error.message || 'HTTP Error',
                 code: error.status,
                 data: {
-                  code: error.status === 400 ? 'BAD_REQUEST' :
-                        error.status === 401 ? 'UNAUTHORIZED' :
-                        error.status === 403 ? 'FORBIDDEN' :
-                        error.status === 404 ? 'NOT_FOUND' :
-                        error.status === 500 ? 'INTERNAL_SERVER_ERROR' :
-                        'UNKNOWN_ERROR',
+                  code:
+                    error.status === 400
+                      ? 'BAD_REQUEST'
+                      : error.status === 401
+                        ? 'UNAUTHORIZED'
+                        : error.status === 403
+                          ? 'FORBIDDEN'
+                          : error.status === 404
+                            ? 'NOT_FOUND'
+                            : error.status === 500
+                              ? 'INTERNAL_SERVER_ERROR'
+                              : 'UNKNOWN_ERROR',
                   httpStatus: error.status,
                 },
               },
@@ -275,12 +316,12 @@ export function angularHttpLink<TRouter extends AnyRouter = AnyRouter>(
   opts: AngularHttpLinkOptions<TRouter['_def']['_config']['$types']>,
 ): TRPCLink<TRouter> {
   const resolvedOpts = resolveHTTPLinkOptions(opts);
-  
+
   return () => {
     return ({ op }) => {
       return observable((observer) => {
         const { path, input, type } = op;
-        
+
         /* istanbul ignore if -- @preserve */
         if (type === 'subscription') {
           throw new Error(

@@ -165,7 +165,7 @@ export function injectTRPCSubscription<TOutput, TError>(
 ): TRPCSubscriptionResult<TOutput, TError> {
   const currentInjector = injector ?? inject(Injector);
   const destroyRef = currentInjector.get(DestroyRef);
-  
+
   // Create reactive signals for subscription state
   const statusSignal = signal<TRPCSubscriptionStatus>('idle');
   const dataSignal = signal<TOutput | undefined>(undefined);

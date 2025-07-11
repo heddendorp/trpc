@@ -1,4 +1,8 @@
-import type { DataTag, QueryClient, QueryFilters } from '@tanstack/angular-query-experimental';
+import type {
+  DataTag,
+  QueryClient,
+  QueryFilters,
+} from '@tanstack/angular-query-experimental';
 import type {
   TRPCClient,
   TRPCClientErrorLike,
@@ -39,10 +43,7 @@ import type {
   TRPCQueryKey,
   WithRequired,
 } from './types';
-import {
-  getMutationKeyInternal,
-  getQueryKeyInternal,
-} from './utils';
+import { getMutationKeyInternal, getQueryKeyInternal } from './utils';
 
 export interface DecorateRouterKeyable {
   /**
@@ -332,7 +333,11 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
           signal: options?.signal,
         });
       },
-      mutation: (path: string, input: unknown, options?: TRPCRequestOptions) => {
+      mutation: (
+        path: string,
+        input: unknown,
+        options?: TRPCRequestOptions,
+      ) => {
         return callTRPCProcedure({
           path,
           input,
@@ -342,7 +347,11 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
           signal: options?.signal,
         });
       },
-      subscription: (path: string, input: unknown, options?: TRPCRequestOptions) => {
+      subscription: (
+        path: string,
+        input: unknown,
+        options?: TRPCRequestOptions,
+      ) => {
         return callTRPCProcedure({
           path,
           input,
@@ -358,7 +367,7 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
   return createTRPCRecursiveProxy(({ path, args }) => {
     const pathCopy = [...path];
     const lastPart = pathCopy.pop();
-    
+
     if (!lastPart) {
       throw new Error('Invalid path');
     }

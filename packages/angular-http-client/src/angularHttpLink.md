@@ -27,11 +27,11 @@ import { createTRPCClient, angularHttpLink } from '@trpc/client';
 import type { AppRouter } from '../server/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrpcService {
   private httpClient = inject(HttpClient);
-  
+
   private client = createTRPCClient<AppRouter>({
     links: [
       angularHttpLink({
@@ -57,7 +57,7 @@ const client = createTRPCClient<AppRouter>({
       url: 'http://localhost:3000/trpc',
       httpClient: this.httpClient,
       headers: {
-        'Authorization': 'Bearer your-token',
+        Authorization: 'Bearer your-token',
         'X-Custom-Header': 'custom-value',
       },
     }),
@@ -76,7 +76,7 @@ const client = createTRPCClient<AppRouter>({
       headers: ({ op }) => {
         // Return headers based on the operation
         return {
-          'Authorization': `Bearer ${this.getAuthToken()}`,
+          Authorization: `Bearer ${this.getAuthToken()}`,
           'X-Operation-Type': op.type,
         };
       },
@@ -121,7 +121,11 @@ The Angular HttpClient link works seamlessly with Angular's HTTP interceptors:
 
 ```typescript
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+} from '@angular/common/http';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -130,15 +134,15 @@ export class AuthInterceptor implements HttpInterceptor {
     if (req.url.includes('/trpc')) {
       const authReq = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.getToken()}`
-        }
+          Authorization: `Bearer ${this.getToken()}`,
+        },
       });
       return next.handle(authReq);
     }
-    
+
     return next.handle(req);
   }
-  
+
   private getToken(): string {
     // Get token from your auth service
     return localStorage.getItem('auth-token') || '';
@@ -192,7 +196,7 @@ setTimeout(() => controller.abort(), 5000);
 try {
   const result = await client.myProcedure.query(
     { input: 'data' },
-    { signal: controller.signal }
+    { signal: controller.signal },
   );
 } catch (error) {
   if (error.message === 'Request aborted') {
@@ -219,13 +223,17 @@ If you're migrating from the standard `httpLink`, the main changes are:
 // Before (httpLink)
 httpLink({
   url: 'http://localhost:3000/trpc',
-  headers: { /* ... */ },
-})
+  headers: {
+    /* ... */
+  },
+});
 
 // After (angularHttpLink)
 angularHttpLink({
   url: 'http://localhost:3000/trpc',
   httpClient: this.httpClient,
-  headers: { /* ... */ },
-})
+  headers: {
+    /* ... */
+  },
+});
 ```

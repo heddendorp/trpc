@@ -19,16 +19,16 @@ export const appRouter = t.router({
   greeting: t.procedure
     .input(z.object({ name: z.string() }))
     .query(({ input }) => `Hello ${input.name}!`),
-  
+
   user: t.router({
     list: t.procedure.query(() => [
       { id: 1, name: 'John' },
-      { id: 2, name: 'Jane' }
+      { id: 2, name: 'Jane' },
     ]),
     create: t.procedure
       .input(z.object({ name: z.string() }))
-      .mutation(({ input }) => ({ id: 3, name: input.name }))
-  })
+      .mutation(({ input }) => ({ id: 3, name: input.name })),
+  }),
 });
 
 // This export is crucial for client-side typing!
@@ -42,7 +42,10 @@ Configure your Angular app with tRPC:
 ```typescript
 // app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
+import {
+  provideTanStackQuery,
+  QueryClient,
+} from '@tanstack/angular-query-experimental';
 import { provideTRPC } from '@trpc/tanstack-angular-query';
 import { createTRPCClient, httpBatchLink } from '@trpc/client';
 import type { AppRouter } from './server/router';
@@ -74,7 +77,10 @@ There are two ways to use tRPC in your components:
 // user-list.component.ts
 import { Component } from '@angular/core';
 import { injectTRPC } from '@trpc/tanstack-angular-query';
-import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
+import {
+  injectQuery,
+  injectMutation,
+} from '@tanstack/angular-query-experimental';
 import type { AppRouter } from './server/router';
 
 @Component({
@@ -97,7 +103,7 @@ import type { AppRouter } from './server/router';
 })
 export class UserListComponent {
   private trpc = injectTRPC<AppRouter>();
-  
+
   users = injectQuery(() => this.trpc.user.list.queryOptions());
 }
 ```
@@ -112,7 +118,8 @@ import { createTRPCInjectors } from '@trpc/tanstack-angular-query';
 import type { AppRouter } from './server/router';
 
 // Typed injection functions for your application
-export const { injectTRPC, injectTRPCClient } = createTRPCInjectors<AppRouter>();
+export const { injectTRPC, injectTRPCClient } =
+  createTRPCInjectors<AppRouter>();
 ```
 
 Then use them in your components without typing:
@@ -120,7 +127,10 @@ Then use them in your components without typing:
 ```typescript
 // user-list.component.ts
 import { Component } from '@angular/core';
-import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
+import {
+  injectQuery,
+  injectMutation,
+} from '@tanstack/angular-query-experimental';
 import { injectTRPC } from './trpc'; // Import your typed injector
 
 @Component({
@@ -144,7 +154,7 @@ import { injectTRPC } from './trpc'; // Import your typed injector
 export class UserListComponent {
   // No need to specify router type - it's automatically inferred!
   private trpc = injectTRPC();
-  
+
   users = injectQuery(() => this.trpc.user.list.queryOptions());
 }
 ```
@@ -172,10 +182,10 @@ const client = createTRPCClient<AppRouter>({ links: [...] });
 **Solution**: These are now exported from the main package:
 
 ```typescript
-import { 
-  provideTRPC, 
-  injectTRPC, 
-  injectTRPCClient 
+import {
+  provideTRPC,
+  injectTRPC,
+  injectTRPCClient,
 } from '@trpc/tanstack-angular-query';
 ```
 

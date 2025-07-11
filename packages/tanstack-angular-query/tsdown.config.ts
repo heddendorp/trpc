@@ -17,6 +17,6 @@ export default defineConfig({
     '@tanstack/angular-query-experimental',
     '@trpc/client',
     '@trpc/server',
-    'typescript'
+    'typescript',
   ],
 });

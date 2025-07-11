@@ -29,11 +29,11 @@ import { angularHttpLink } from '@trpc/angular-http-client';
 import type { AppRouter } from '../server/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrpcService {
   private httpClient = inject(HttpClient);
-  
+
   private client = createTRPCClient<AppRouter>({
     links: [
       angularHttpLink({
@@ -68,10 +68,10 @@ angularHttpLink({
   url: 'http://localhost:3000/trpc',
   httpClient: this.httpClient,
   headers: {
-    'Authorization': 'Bearer your-token',
+    Authorization: 'Bearer your-token',
     'X-Custom-Header': 'custom-value',
   },
-})
+});
 ```
 
 ### With Dynamic Headers
@@ -81,10 +81,10 @@ angularHttpLink({
   url: 'http://localhost:3000/trpc',
   httpClient: this.httpClient,
   headers: ({ op }) => ({
-    'Authorization': `Bearer ${this.getAuthToken()}`,
+    Authorization: `Bearer ${this.getAuthToken()}`,
     'X-Operation-Type': op.type,
   }),
-})
+});
 ```
 
 ### With Angular HTTP Interceptors
@@ -96,8 +96,8 @@ export class AuthInterceptor implements HttpInterceptor {
     if (req.url.includes('/trpc')) {
       const authReq = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.getToken()}`
-        }
+          Authorization: `Bearer ${this.getToken()}`,
+        },
       });
       return next.handle(authReq);
     }
@@ -124,8 +124,10 @@ import { httpLink } from '@trpc/client';
 
 httpLink({
   url: 'http://localhost:3000/trpc',
-  headers: { /* ... */ },
-})
+  headers: {
+    /* ... */
+  },
+});
 
 // After
 import { angularHttpLink } from '@trpc/angular-http-client';
@@ -133,8 +135,10 @@ import { angularHttpLink } from '@trpc/angular-http-client';
 angularHttpLink({
   url: 'http://localhost:3000/trpc',
   httpClient: this.httpClient,
-  headers: { /* ... */ },
-})
+  headers: {
+    /* ... */
+  },
+});
 ```
 
 ## Limitations

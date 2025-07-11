@@ -42,14 +42,14 @@ const trpcClient = createTRPCClient<AppRouter>({
 ```typescript
 // app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
+import {
+  provideTanStackQuery,
+  QueryClient,
+} from '@tanstack/angular-query-experimental';
 import { provideTRPC } from '@trpc/tanstack-angular-query';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideTanStackQuery(new QueryClient()),
-    provideTRPC(trpcClient),
-  ],
+  providers: [provideTanStackQuery(new QueryClient()), provideTRPC(trpcClient)],
 };
 ```
 
@@ -61,7 +61,10 @@ There are two approaches to use tRPC in your components:
 
 ```typescript
 import { Component } from '@angular/core';
-import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
+import {
+  injectQuery,
+  injectMutation,
+} from '@tanstack/angular-query-experimental';
 import { injectTRPC } from '@trpc/tanstack-angular-query';
 import type { AppRouter } from './server/router';
 
@@ -80,8 +83,11 @@ import type { AppRouter } from './server/router';
           }
         </ul>
       }
-      
-      <button (click)="createUser()" [disabled]="createUserMutation.isPending()">
+
+      <button
+        (click)="createUser()"
+        [disabled]="createUserMutation.isPending()"
+      >
         Create User
       </button>
     </div>
@@ -89,17 +95,17 @@ import type { AppRouter } from './server/router';
 })
 export class UserListComponent {
   private trpc = injectTRPC<AppRouter>(); // Type specified here
-  
+
   userQuery = injectQuery(() => this.trpc.user.list.queryOptions());
-  
-  createUserMutation = injectMutation(() => 
+
+  createUserMutation = injectMutation(() =>
     this.trpc.user.create.mutationOptions({
       onSuccess: () => {
         this.userQuery.refetch();
       },
-    })
+    }),
   );
-  
+
   createUser() {
     this.createUserMutation.mutate({ name: 'New User' });
   }
@@ -116,14 +122,18 @@ import { createTRPCInjectors } from '@trpc/tanstack-angular-query';
 import type { AppRouter } from './server/router';
 
 // Export typed injection functions for your application
-export const { injectTRPC, injectTRPCClient } = createTRPCInjectors<AppRouter>();
+export const { injectTRPC, injectTRPCClient } =
+  createTRPCInjectors<AppRouter>();
 ```
 
 Then use them in your components without specifying the router type:
 
 ```typescript
 import { Component } from '@angular/core';
-import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
+import {
+  injectQuery,
+  injectMutation,
+} from '@tanstack/angular-query-experimental';
 import { injectTRPC } from './trpc'; // Import your typed injector
 
 @Component({
@@ -141,8 +151,11 @@ import { injectTRPC } from './trpc'; // Import your typed injector
           }
         </ul>
       }
-      
-      <button (click)="createUser()" [disabled]="createUserMutation.isPending()">
+
+      <button
+        (click)="createUser()"
+        [disabled]="createUserMutation.isPending()"
+      >
         Create User
       </button>
     </div>
@@ -150,17 +163,17 @@ import { injectTRPC } from './trpc'; // Import your typed injector
 })
 export class UserListComponent {
   private trpc = injectTRPC(); // No type annotation needed!
-  
+
   userQuery = injectQuery(() => this.trpc.user.list.queryOptions());
-  
-  createUserMutation = injectMutation(() => 
+
+  createUserMutation = injectMutation(() =>
     this.trpc.user.create.mutationOptions({
       onSuccess: () => {
         this.userQuery.refetch();
       },
-    })
+    }),
   );
-  
+
   createUser() {
     this.createUserMutation.mutate({ name: 'New User' });
   }
@@ -195,6 +208,7 @@ This package provides a complete Angular adapter for tRPC with TanStack Query in
 ## Documentation
 
 For detailed documentation and examples, visit:
+
 - [tRPC docs](https://trpc.io/docs/client/tanstack-angular-query/setup)
 - [TanStack Query Angular docs](https://tanstack.com/query/latest/docs/framework/angular/overview)
 
