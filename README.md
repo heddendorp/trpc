@@ -1,53 +1,103 @@
-<a href="https://trpc.io/" target="_blank" rel="noopener">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://assets.trpc.io/www/trpc-readme-dark.png" />
-    <img alt="tRPC" src="https://assets.trpc.io/www/trpc-readme.png" />
-  </picture>
-</a>
+# tRPC Angular Packages
 
-<div align="center">
-  <h1>tRPC</h1>
-  <h3>Move fast and break nothing.<br />End-to-end typesafe APIs made easy.</h3>
-  <a href="https://codecov.io/gh/trpc/trpc">
-    <img alt="codecov" src="https://codecov.io/gh/trpc/trpc/branch/next/graph/badge.svg?token=KPPS918B0G">
-  </a>
-  <a href="https://npmcharts.com/compare/@trpc/server?interval=30">
-    <img alt="weekly downloads" src="https://img.shields.io/npm/dm/%40trpc/server.svg">
-  </a>
-  <a href="https://github.com/trpc/trpc/blob/main/LICENSE">
-    <img alt="MIT License" src="https://img.shields.io/github/license/trpc/trpc" />
-  </a>
-  <a href="https://trpc.io/discord">
-    <img alt="Discord" src="https://img.shields.io/discord/867764511159091230?color=7389D8&label&logo=discord&logoColor=ffffff" />
-  </a>
-  <br />
-  <a href="https://twitter.com/trpcio">
-    <img alt="Twitter" src="https://img.shields.io/twitter/url.svg?label=%40trpcio&style=social&url=https%3A%2F%2Ftwitter.com%2Falexdotjs" />
-  </a>
-  <br />
-  <br />
-  <figure>
-    <img src="https://assets.trpc.io/www/v10/v10-dark-landscape.gif" alt="Demo" />
-    <figcaption>
-      <p align="center">
-        The client above is <strong>not</strong> importing any code from the server, only its type declarations.
-      </p>
-    </figcaption>
-  </figure>
-</div>
+This repository contains two Angular packages for tRPC:
 
-<br />
+- `@heddendorp/angular-http-client` - Angular HttpClient link for tRPC client
+- `@heddendorp/tanstack-angular-query` - TanStack Angular Query Integration for tRPC
 
-## Intro
+## Overview
 
-tRPC allows you to easily build & consume fully typesafe APIs without schemas or code generation.
+These packages have been extracted from the main tRPC repository and simplified for easier maintenance and publishing to the `@heddendorp` npm scope.
 
-### Features
+## Packages
 
-- ✅&nbsp; Well-tested and production ready.
-- 🧙‍♂️&nbsp; Full static typesafety & autocompletion on the client, for inputs, outputs, and errors.
-- 🐎&nbsp; Snappy DX - No code generation, run-time bloat, or build pipeline.
-- 🍃&nbsp; Light - tRPC has zero deps and a tiny client-side footprint.
+### @heddendorp/angular-http-client
+
+An Angular HttpClient link for tRPC client that allows you to use Angular's HttpClient with tRPC.
+
+- **Location**: `packages/angular-http-client`
+- **Main Purpose**: Provides HTTP transport for tRPC client using Angular's HttpClient
+- **Peer Dependencies**: 
+  - `@angular/common >=16.0.0`
+  - `@angular/core >=16.0.0`
+  - `@trpc/client 11.4.3`
+  - `@trpc/server 11.4.3`
+  - `rxjs >=7.0.0`
+
+### @heddendorp/tanstack-angular-query
+
+TanStack Angular Query Integration for tRPC that provides reactive query capabilities for Angular applications.
+
+- **Location**: `packages/tanstack-angular-query`
+- **Main Purpose**: Integrates tRPC with TanStack Angular Query for reactive data fetching
+- **Peer Dependencies**: 
+  - `@angular/core >=16.0.0`
+  - `@tanstack/angular-query-experimental >=5.80.3`
+  - `@trpc/client 11.4.3`
+  - `@trpc/server 11.4.3`
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm 9.12.2+
+
+### Installation
+
+```bash
+pnpm install
+```
+
+### Building
+
+```bash
+pnpm build
+```
+
+### Running Tests
+
+```bash
+pnpm test
+```
+
+### Publishing
+
+```bash
+pnpm publish
+```
+
+## GitHub Actions
+
+The repository includes a simplified CI/CD pipeline:
+
+- **CI**: Runs on push to main/next branches and PRs
+- **Publishing**: Automatically publishes packages to npm when changes are pushed to main
+
+## Architecture
+
+The repository is structured as a monorepo with:
+
+- **Root**: Contains shared configuration and scripts
+- **packages/**: Contains the two Angular packages
+- **Build System**: Uses `tsdown` for building TypeScript packages
+- **Package Manager**: Uses `pnpm` with workspaces
+- **Publishing**: Uses `lerna` for coordinated publishing
+
+## Simplified from Original
+
+This repository has been significantly simplified from the original tRPC repository:
+
+- Removed all non-Angular packages
+- Removed complex build tooling (turbo, extensive testing setup)
+- Removed documentation website and examples
+- Simplified GitHub Actions
+- Removed unnecessary configuration files
+- Changed package scope from `@trpc` to `@heddendorp`
+
+## License
+
+MIT
 - 🐻&nbsp; Easy to add to your existing brownfield project.
 - 🔋&nbsp; Batteries included - React.js/Next.js/Express.js/Fastify adapters. _(But tRPC is not tied to React, and there are many [community adapters](https://trpc.io/docs/awesome-trpc#-extensions--community-add-ons) for other libraries)_
 - 🥃&nbsp; Subscriptions support.
