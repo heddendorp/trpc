@@ -116,6 +116,7 @@ function angularHttpRequester(
       ...opts,
       input: opts.input || undefined,
       transformer: opts.transformer,
+      signal: opts.signal ?? null,
     });
 
     // Convert headers to Angular format
@@ -304,7 +305,7 @@ export function angularHttpLink<TRouter extends AnyRouter = AnyRouter>(
               type,
               path,
               input,
-              signal: op.signal,
+              signal: op.signal ?? undefined,
               headers,
               methodOverride: resolvedOpts.methodOverride,
             });
