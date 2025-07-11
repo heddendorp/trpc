@@ -38,7 +38,66 @@ bun add @trpc/server
 
 We also recommend installing `zod` to validate procedure inputs.
 
-## Basic Example
+## Core Concepts
+
+### 1. Initialize tRPC
+Start by creating a tRPC instance with `initTRPC`:
+
+```ts
+import { initTRPC } from '@trpc/server';
+
+const t = initTRPC.create();
+```
+
+### 2. Create Procedures
+Build type-safe procedures with input validation:
+
+```ts
+import { z } from 'zod';
+
+const publicProcedure = t.procedure;
+
+const greeting = publicProcedure
+  .input(z.object({ name: z.string() }))
+  .query(({ input }) => `Hello, ${input.name}!`);
+```
+
+### 3. Create Routers
+Combine procedures into routers:
+
+```ts
+const appRouter = t.router({
+  greeting,
+  // Add more procedures here
+});
+
+export type AppRouter = typeof appRouter;
+```
+
+### 4. Connect to a Server
+Use adapters to connect your router to different server frameworks:
+
+```ts
+import { createHTTPServer } from '@trpc/server/adapters/standalone';
+
+const { listen } = createHTTPServer({
+  router: appRouter,
+});
+
+listen(3000);
+```
+
+## Available Adapters
+
+- **Standalone**: `@trpc/server/adapters/standalone`
+- **Express**: `@trpc/server/adapters/express`
+- **Next.js**: `@trpc/server/adapters/next`
+- **Fastify**: `@trpc/server/adapters/fastify`
+- **AWS Lambda**: `@trpc/server/adapters/aws-lambda`
+- **Fetch API**: `@trpc/server/adapters/fetch`
+- **WebSocket**: `@trpc/server/adapters/ws`
+
+## Complete Example
 
 ```ts
 import { initTRPC } from '@trpc/server';
@@ -83,3 +142,14 @@ const { listen } = createHTTPServer({
 // Listen on port 2022
 listen(2022);
 ```
+
+## Key Features
+
+- **Type Safety**: Full TypeScript support with end-to-end type safety
+- **Input Validation**: Built-in support for validation libraries like Zod
+- **Middleware**: Add authentication, logging, and other middleware
+- **Context**: Share data across procedures with context
+- **Subscriptions**: Real-time updates with WebSocket support
+- **Error Handling**: Structured error handling with custom error types
+- **Transformers**: Transform data between client and server
+- **Batching**: Automatic request batching for better performance

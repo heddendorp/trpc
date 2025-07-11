@@ -1,3 +1,4 @@
+// Core tRPC functionality
 export {
   TRPCError,
   /**
@@ -6,11 +7,16 @@ export {
   experimental_standaloneMiddleware,
   experimental_standaloneMiddleware as experimental_trpcMiddleware,
   initTRPC,
-  // --- FIXME a bunch of these exports are only useful for plugins - move them somewhere else? ----
+} from '../../unstable-core-do-not-import';
+
+// Plugin utilities (for framework integrations and advanced use cases)
+export {
   getTRPCErrorFromUnknown,
   transformTRPCResponse,
   createFlatProxy as createTRPCFlatProxy,
   createRecursiveProxy as createTRPCRecursiveProxy,
+// Type inference utilities
+export {
   type inferProcedureInput,
   type inferProcedureOutput,
   type inferProcedureBuilderResolverOptions,
@@ -19,9 +25,13 @@ export {
   type inferRouterOutputs,
   type inferRouterContext,
   type inferClientTypes as inferTRPCClientTypes,
-  type AnyClientTypes as AnyTRPCClientTypes,
   type inferTransformedProcedureOutput,
   type inferTransformedSubscriptionOutput,
+} from '../../unstable-core-do-not-import';
+
+// Core types  
+export {
+  type AnyClientTypes as AnyTRPCClientTypes,
   type AnyProcedure as AnyTRPCProcedure,
   type AnyRouter as AnyTRPCRouter,
   type RouterDef as TRPCRouterDef,
@@ -29,34 +39,56 @@ export {
   type RouterCallerFactory as TRPCRouterCallerFactory,
   type RootConfig as TRPCRootConfig,
   type AnyRootTypes as AnyTRPCRootTypes,
+// Middleware types
+export {
   type MiddlewareFunction as TRPCMiddlewareFunction,
   type MiddlewareBuilder as TRPCMiddlewareBuilder,
   type AnyMiddlewareFunction as AnyTRPCMiddlewareFunction,
+} from '../../unstable-core-do-not-import';
+
+// Procedure types
+export {
   type CombinedDataTransformer as TRPCCombinedDataTransformer,
   type ProcedureType as TRPCProcedureType,
   type AnyMutationProcedure as AnyTRPCMutationProcedure,
   type AnyQueryProcedure as AnyTRPCQueryProcedure,
-  type RouterRecord as TRPCRouterRecord,
-  type MergeRouters as TRPCMergeRouters,
   type AnySubscriptionProcedure as AnyTRPCSubscriptionProcedure,
-  type CreateContextCallback,
   type MutationProcedure as TRPCMutationProcedure,
   type QueryProcedure as TRPCQueryProcedure,
-  type BuiltRouter as TRPCBuiltRouter,
   type SubscriptionProcedure as TRPCSubscriptionProcedure,
+} from '../../unstable-core-do-not-import';
+
+// Router types
+export {
+  type RouterRecord as TRPCRouterRecord,
+  type MergeRouters as TRPCMergeRouters,
+  type BuiltRouter as TRPCBuiltRouter,
+// Builder types
+export {
   type TRPCBuilder,
   type ProcedureBuilder as TRPCProcedureBuilder,
   type RuntimeConfigOptions as TRPCRuntimeConfigOptions,
   type TRPCRootObject,
+  type CreateContextCallback,
+} from '../../unstable-core-do-not-import';
+
+// Error handling types
+export {
   type ErrorFormatter as TRPCErrorFormatter,
   type TRPCErrorShape,
   type DefaultErrorShape as TRPCDefaultErrorShape,
   type DefaultErrorData as TRPCDefaultErrorData,
   type TRPC_ERROR_CODE_KEY,
   type TRPC_ERROR_CODE_NUMBER,
+} from '../../unstable-core-do-not-import';
+
+// Router configuration types
+export {
   type DecorateCreateRouterOptions as TRPCDecorateCreateRouterOptions,
   type CreateRouterOptions as TRPCCreateRouterOptions,
   type RouterCaller as TRPCRouterCaller,
+// Streaming and advanced features
+export {
   StandardSchemaV1Error,
   /**
    * @deprecated use `tracked(id, data)` instead
@@ -71,13 +103,18 @@ export {
    */
   lazy as experimental_lazy,
   callProcedure as callTRPCProcedure,
+} from '../../unstable-core-do-not-import';
 
+// Internal utilities (marked as internal but exposed for advanced use cases)
+export {
   /**
    * @internal
    */
   type UnsetMarker as TRPCUnsetMarker,
 } from '../../unstable-core-do-not-import';
+} from '../../unstable-core-do-not-import';
 
+// Deprecated type aliases (will be removed in v12)
 export type {
   /**
    * @deprecated use `AnyTRPCProcedure` instead
@@ -95,12 +132,10 @@ export type {
    * @deprecated use `TRPCCombinedDataTransformer` instead
    */
   CombinedDataTransformer,
-
   /**
    * @deprecated This is a utility type will be removed in v12
    */
   Dict,
-
   /**
    * @deprecated This is a utility type will be removed in v12
    */
@@ -113,7 +148,6 @@ export type {
    * @deprecated use `AnyTRPCMutationProcedure` instead
    */
   AnyMutationProcedure,
-
   /**
    * @deprecated use `AnyTRPCQueryProcedure` instead
    */
@@ -124,6 +158,7 @@ export type {
   AnySubscriptionProcedure,
 } from '../../unstable-core-do-not-import';
 
+// Error handling utilities
 export {
   /**
    * @deprecated use `getTRPCErrorShape` instead

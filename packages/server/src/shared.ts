@@ -1,3 +1,8 @@
+/**
+ * @deprecated This entire file is deprecated. Import directly from '@trpc/server' instead.
+ * This file will be removed in a future version.
+ */
+
 export {
   /**
    * @deprecated `import from '@trpc/server'` instead
