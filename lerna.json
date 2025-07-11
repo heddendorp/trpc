@@ -1,6 +1,6 @@
 {
-  "version": "11.4.3",
-  "registry": "https://registry.npmjs.org/",
+  "version": "11.5.0",
+  "registry": "http://localhost:4873",
   "npmClient": "pnpm",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }

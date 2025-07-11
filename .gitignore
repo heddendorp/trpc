@@ -28,6 +28,7 @@ packages/*/*/
 !packages/*/src/
 !packages/*/test/
 !packages/*/__tests__/
+!packages/*/examples/
 # and all folders inside `tests` package, which is handled separately
 !packages/tests/*/
 packages/tests/node_modules
