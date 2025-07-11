@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { injectTRPC } from '@trpc/tanstack-angular-query';
 import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
-import type { AppRouter } from './server/router'; // Your router type
+import { injectTRPC } from './trpc'; // Use the typed injection function
 
 @Component({
   selector: 'app-user-list',
@@ -66,7 +65,8 @@ import type { AppRouter } from './server/router'; // Your router type
   `]
 })
 export class UserListComponent {
-  private trpc = injectTRPC<AppRouter>();
+  // No need to specify router type - it's automatically inferred!
+  private trpc = injectTRPC();
   
   newUserName = '';
   

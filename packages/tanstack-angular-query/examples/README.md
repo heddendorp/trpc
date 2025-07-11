@@ -66,7 +66,9 @@ export const appConfig: ApplicationConfig = {
 
 ### 3. Component Usage
 
-Use tRPC in your components:
+There are two ways to use tRPC in your components:
+
+#### Option 1: Type Router in Each Component
 
 ```typescript
 // user-list.component.ts
@@ -95,6 +97,53 @@ import type { AppRouter } from './server/router';
 })
 export class UserListComponent {
   private trpc = injectTRPC<AppRouter>();
+  
+  users = injectQuery(() => this.trpc.user.list.queryOptions());
+}
+```
+
+#### Option 2: Create Typed Injectors (Recommended)
+
+For better ergonomics, create typed injection functions once and reuse them:
+
+```typescript
+// trpc.ts - Create this file once in your project
+import { createTRPCInjectors } from '@trpc/tanstack-angular-query';
+import type { AppRouter } from './server/router';
+
+// Typed injection functions for your application
+export const { injectTRPC, injectTRPCClient } = createTRPCInjectors<AppRouter>();
+```
+
+Then use them in your components without typing:
+
+```typescript
+// user-list.component.ts
+import { Component } from '@angular/core';
+import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
+import { injectTRPC } from './trpc'; // Import your typed injector
+
+@Component({
+  selector: 'app-user-list',
+  template: `
+    <div>
+      @if (users.isPending()) {
+        <p>Loading...</p>
+      } @else if (users.isError()) {
+        <p>Error: {{ users.error()?.message }}</p>
+      } @else {
+        <ul>
+          @for (user of users.data(); track user.id) {
+            <li>{{ user.name }}</li>
+          }
+        </ul>
+      }
+    </div>
+  `,
+})
+export class UserListComponent {
+  // No need to specify router type - it's automatically inferred!
+  private trpc = injectTRPC();
   
   users = injectQuery(() => this.trpc.user.list.queryOptions());
 }
@@ -147,6 +196,7 @@ pnpm install
 ## Examples in This Directory
 
 - [`app.config.ts`](./app.config.ts) - Complete application configuration
+- [`trpc.ts`](./trpc.ts) - Typed injection functions (recommended approach)
 - [`user-list.component.ts`](./user-list.component.ts) - Component with queries and mutations
 - [`server/router.ts`](./server/router.ts) - Example tRPC router
 - [`TROUBLESHOOTING.md`](./TROUBLESHOOTING.md) - Common issues and solutions

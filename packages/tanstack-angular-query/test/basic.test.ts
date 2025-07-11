@@ -6,7 +6,7 @@ import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
 import { QueryClient, provideTanStackQuery } from '@tanstack/angular-query-experimental';
 import { createTRPCOptionsProxy } from '../src/internals/createOptionsProxy';
-import { provideTRPC, injectTRPC } from '../src/index';
+import { provideTRPC, injectTRPC, createTRPCInjectors } from '../src/index';
 
 // Mock server setup
 const t = initTRPC.create();
@@ -62,6 +62,7 @@ describe('package exports', () => {
     expect(module.provideTRPC).toBeDefined();
     expect(module.injectTRPC).toBeDefined();
     expect(module.injectTRPCClient).toBeDefined();
+    expect(module.createTRPCInjectors).toBeDefined();
   });
 });
 
@@ -157,5 +158,35 @@ describe('Angular integration', () => {
     expect(createUserOptions.mutationKey).toBeDefined();
     expect(createUserOptions.mutationFn).toBeDefined();
     expect(createUserOptions.trpc).toBeDefined();
+  });
+
+  it('should work with createTRPCInjectors for typed injection', () => {
+    const { injectTRPC: injectTypedTRPC, injectTRPCClient: injectTypedTRPCClient } = 
+      createTRPCInjectors<AppRouter>();
+
+    @Component({
+      template: '',
+    })
+    class TestComponent {
+      trpc = injectTypedTRPC();
+      client = injectTypedTRPCClient();
+    }
+
+    TestBed.configureTestingModule({
+      providers: [
+        provideTanStackQuery(queryClient),
+        provideTRPC(trpcClient),
+      ],
+    });
+
+    const fixture = TestBed.createComponent(TestComponent);
+    const component = fixture.componentInstance;
+
+    expect(component.trpc).toBeDefined();
+    expect(component.trpc.greeting).toBeDefined();
+    expect(component.trpc.user).toBeDefined();
+    expect(component.trpc.user.list).toBeDefined();
+    expect(component.trpc.user.create).toBeDefined();
+    expect(component.client).toBeDefined();
   });
 });

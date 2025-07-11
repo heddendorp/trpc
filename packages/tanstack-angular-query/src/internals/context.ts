@@ -74,3 +74,36 @@ export function injectTRPCClient<TRouter extends AnyTRPCRouter = AnyTRPCRouter>(
 export function injectTRPC<TRouter extends AnyTRPCRouter = AnyTRPCRouter>(): TRPCOptionsProxy<TRouter> {
   return inject(TRPC_OPTIONS_PROXY) as TRPCOptionsProxy<TRouter>;
 }
+
+/**
+ * Create typed injection functions for a specific router type.
+ * This allows you to avoid specifying the router type in every component.
+ * 
+ * @example
+ * ```typescript
+ * // In a shared file (e.g., trpc.ts)
+ * const { injectTRPC, injectTRPCClient } = createTRPCInjectors<AppRouter>();
+ * 
+ * // In components
+ * export class MyComponent {
+ *   private trpc = injectTRPC(); // Automatically typed with AppRouter
+ * }
+ * ```
+ */
+export function createTRPCInjectors<TRouter extends AnyTRPCRouter>() {
+  return {
+    /**
+     * Inject tRPC options proxy with router type automatically inferred
+     */
+    injectTRPC: (): TRPCOptionsProxy<TRouter> => {
+      return inject(TRPC_OPTIONS_PROXY) as TRPCOptionsProxy<TRouter>;
+    },
+    
+    /**
+     * Inject tRPC client with router type automatically inferred
+     */
+    injectTRPCClient: (): TRPCClient<TRouter> => {
+      return inject(TRPC_CLIENT) as TRPCClient<TRouter>;
+    },
+  };
+}

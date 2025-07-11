@@ -55,10 +55,15 @@ export const appConfig: ApplicationConfig = {
 
 ### 3. Use in Components
 
+There are two approaches to use tRPC in your components:
+
+#### Option A: Type in Each Component
+
 ```typescript
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
 import { injectTRPC } from '@trpc/tanstack-angular-query';
+import type { AppRouter } from './server/router';
 
 @Component({
   selector: 'app-user-list',
@@ -83,14 +88,74 @@ import { injectTRPC } from '@trpc/tanstack-angular-query';
   `,
 })
 export class UserListComponent {
-  private trpc = injectTRPC();
+  private trpc = injectTRPC<AppRouter>(); // Type specified here
   
   userQuery = injectQuery(() => this.trpc.user.list.queryOptions());
   
   createUserMutation = injectMutation(() => 
     this.trpc.user.create.mutationOptions({
       onSuccess: () => {
-        // Invalidate and refetch user list
+        this.userQuery.refetch();
+      },
+    })
+  );
+  
+  createUser() {
+    this.createUserMutation.mutate({ name: 'New User' });
+  }
+}
+```
+
+#### Option B: Create Typed Injectors (Recommended)
+
+For better ergonomics, create typed injection functions once and reuse them:
+
+```typescript
+// trpc.ts - Create this file once in your project
+import { createTRPCInjectors } from '@trpc/tanstack-angular-query';
+import type { AppRouter } from './server/router';
+
+// Export typed injection functions for your application
+export const { injectTRPC, injectTRPCClient } = createTRPCInjectors<AppRouter>();
+```
+
+Then use them in your components without specifying the router type:
+
+```typescript
+import { Component } from '@angular/core';
+import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
+import { injectTRPC } from './trpc'; // Import your typed injector
+
+@Component({
+  selector: 'app-user-list',
+  template: `
+    <div>
+      @if (userQuery.isPending()) {
+        <p>Loading...</p>
+      } @else if (userQuery.isError()) {
+        <p>Error: {{ userQuery.error()?.message }}</p>
+      } @else {
+        <ul>
+          @for (user of userQuery.data(); track user.id) {
+            <li>{{ user.name }}</li>
+          }
+        </ul>
+      }
+      
+      <button (click)="createUser()" [disabled]="createUserMutation.isPending()">
+        Create User
+      </button>
+    </div>
+  `,
+})
+export class UserListComponent {
+  private trpc = injectTRPC(); // No type annotation needed!
+  
+  userQuery = injectQuery(() => this.trpc.user.list.queryOptions());
+  
+  createUserMutation = injectMutation(() => 
+    this.trpc.user.create.mutationOptions({
+      onSuccess: () => {
         this.userQuery.refetch();
       },
     })
