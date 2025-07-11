@@ -1,0 +1,15 @@
+{
+  "extends": "../../turbo.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*", "package.json", "tsconfig.json", "tsconfig.build.json", "tsdown.config.ts"],
+      "outputs": ["dist/**/*"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["test/**/*", "src/**/*", "package.json", "tsconfig.json", "vitest.config.ts", "vitest.workspace.json"],
+      "outputs": ["coverage/**/*"]
+    }
+  }
+}
