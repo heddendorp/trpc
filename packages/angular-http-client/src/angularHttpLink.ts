@@ -5,15 +5,15 @@ import type {
   TRPCResponse,
 } from '@trpc/server/unstable-core-do-not-import';
 import { transformResult } from '@trpc/server/unstable-core-do-not-import';
-import { TRPCClientError } from '../TRPCClientError';
-import type { HTTPLinkBaseOptions } from './internals/httpUtils';
+import { TRPCClientError } from '@trpc/client';
+import type { HTTPLinkBaseOptions } from '@trpc/client/unstable-internals';
 import {
   getInput,
   getUrl,
   resolveHTTPLinkOptions,
   type HTTPResult,
-} from './internals/httpUtils';
-import type { HTTPHeaders, Operation, TRPCLink } from './types';
+} from '@trpc/client/unstable-internals';
+import type { HTTPHeaders, Operation, TRPCLink } from '@trpc/client';
 
 // Angular HttpClient interfaces (minimal definitions needed)
 interface AngularHttpClient {

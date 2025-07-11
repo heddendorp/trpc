@@ -1,7 +1,6 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { createTRPCClient } from '../createTRPCClient';
-import { isTRPCClientError } from '../TRPCClientError';
+import { createTRPCClient, isTRPCClientError } from '@trpc/client';
 import { angularHttpLink } from './angularHttpLink';
 
 // Mock Angular HttpClient
