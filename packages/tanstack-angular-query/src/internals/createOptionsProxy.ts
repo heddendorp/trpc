@@ -50,7 +50,6 @@ export interface DecorateRouterKeyable {
    * Calculate the TanStack Query Key for any path, could be used to invalidate every procedure beneath this path
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/guides/query-keys
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#queryKey
    */
   pathKey: () => TRPCQueryKey;
 
@@ -58,7 +57,6 @@ export interface DecorateRouterKeyable {
    * Calculate a TanStack Query Filter for any path, could be used to manipulate every procedure beneath this path
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/guides/filters
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#queryFilter
    */
   pathFilter: (
     filters?: QueryFilters<TRPCQueryKey>,
@@ -96,7 +94,7 @@ export interface DecorateInfiniteQueryProcedure<TDef extends ResolverDef>
    * Create a set of type-safe infinite query options that can be passed to `injectInfiniteQuery`, `prefetchInfiniteQuery` etc.
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/reference/infiniteQueryOptions#infinitequeryoptions
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#infiniteQueryOptions
+
    */
   infiniteQueryOptions: TRPCInfiniteQueryOptions<TDef>;
 
@@ -104,7 +102,7 @@ export interface DecorateInfiniteQueryProcedure<TDef extends ResolverDef>
    * Calculate the TanStack Query Key for a Infinite Query Procedure
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/guides/query-keys
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#queryKey
+
    */
   infiniteQueryKey: (input?: Partial<TDef['input']>) => DataTag<
     TRPCQueryKey,
@@ -119,7 +117,7 @@ export interface DecorateInfiniteQueryProcedure<TDef extends ResolverDef>
    * Calculate a TanStack Query Filter for a Infinite Query Procedure
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/guides/filters
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#queryFilter
+
    */
   infiniteQueryFilter: (
     input?: Partial<TDef['input']>,
@@ -155,7 +153,7 @@ export interface DecorateQueryProcedure<TDef extends ResolverDef>
    * Create a set of type-safe query options that can be passed to `injectQuery`, `prefetchQuery` etc.
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/reference/queryOptions#queryoptions
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#queryOptions
+
    */
   queryOptions: TRPCQueryOptions<TDef>;
 
@@ -163,7 +161,7 @@ export interface DecorateQueryProcedure<TDef extends ResolverDef>
    * Calculate the TanStack Query Key for a Query Procedure
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/guides/query-keys
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#queryKey
+
    */
   queryKey: (input?: Partial<TDef['input']>) => DataTag<
     TRPCQueryKey,
@@ -178,7 +176,7 @@ export interface DecorateQueryProcedure<TDef extends ResolverDef>
    * Calculate a TanStack Query Filter for a Query Procedure
    *
    * @see https://tanstack.com/query/latest/docs/framework/angular/guides/filters
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#queryFilter
+
    */
   queryFilter: (
     input?: Partial<TDef['input']>,
@@ -212,14 +210,14 @@ export interface DecorateMutationProcedure<TDef extends ResolverDef>
   /**
    * Create a set of type-safe mutation options that can be passed to `injectMutation`
    *
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#mutationOptions
+
    */
   mutationOptions: TRPCMutationOptions<TDef>;
 
   /**
    * Calculate the TanStack Mutation Key for a Mutation Procedure
    *
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#mutationKey
+
    */
   mutationKey: () => TRPCMutationKey;
 }
@@ -228,7 +226,7 @@ export interface DecorateSubscriptionProcedure<TDef extends ResolverDef> {
   /**
    * Create a set of type-safe subscription options that can be passed to `injectTRPCSubscription`
    *
-   * @see https://trpc.io/docs/client/tanstack-angular-query/usage#subscriptionOptions
+
    */
   subscriptionOptions: TRPCSubscriptionOptions<TDef>;
 }
@@ -310,7 +308,7 @@ export type TRPCOptionsProxyOptions<TRouter extends AnyTRPCRouter> =
 /**
  * Create a tRPC options proxy for Angular applications
  *
- * @see https://trpc.io/docs/client/tanstack-angular-query/setup
+
  */
 export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
   opts: TRPCOptionsProxyOptions<TRouter>,

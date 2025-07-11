@@ -1,9 +1,9 @@
 {
   "name": "@heddendorp/tanstack-angular-query",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "TanStack Angular Query Integration for tRPC",
-  "author": "tRPC Team",
+  "author": "heddendorp",
   "license": "MIT",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -44,10 +44,6 @@
   ],
   "eslintConfig": {
     "rules": {
-      "no-restricted-imports": [
-        "error",
-        "@trpc/tanstack-angular-query"
-      ],
       "@typescript-eslint/prefer-function-type": "off"
     }
   },
@@ -76,8 +72,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "funding": [
-    "https://trpc.io/sponsor"
-  ]
+  }
 }

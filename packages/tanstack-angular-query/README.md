@@ -1,6 +1,6 @@
-# @trpc/tanstack-angular-query
+# @heddendorp/tanstack-angular-query
 
-<a href="https://trpc.io/docs/client/tanstack-angular-query/setup"><strong>TanStack Angular Query Integration for tRPC</strong></a> • <a href="https://trpc.io/docs"><strong>Read the docs</strong></a>
+**TanStack Angular Query Integration for tRPC**
 
 > ⚠️ **Experimental Package** - This package is currently experimental and depends on `@tanstack/angular-query-experimental`. API may change in future versions.
 
@@ -8,16 +8,16 @@
 
 ```bash
 # npm
-npm install @trpc/tanstack-angular-query @tanstack/angular-query-experimental
+npm install @heddendorp/tanstack-angular-query @tanstack/angular-query-experimental
 
 # Yarn
-yarn add @trpc/tanstack-angular-query @tanstack/angular-query-experimental
+yarn add @heddendorp/tanstack-angular-query @tanstack/angular-query-experimental
 
 # pnpm
-pnpm add @trpc/tanstack-angular-query @tanstack/angular-query-experimental
+pnpm add @heddendorp/tanstack-angular-query @tanstack/angular-query-experimental
 
 # Bun
-bun add @trpc/tanstack-angular-query @tanstack/angular-query-experimental
+bun add @heddendorp/tanstack-angular-query @tanstack/angular-query-experimental
 ```
 
 ## Usage
@@ -209,7 +209,6 @@ This package provides a complete Angular adapter for tRPC with TanStack Query in
 
 For detailed documentation and examples, visit:
 
-- [tRPC docs](https://trpc.io/docs/client/tanstack-angular-query/setup)
 - [TanStack Query Angular docs](https://tanstack.com/query/latest/docs/framework/angular/overview)
 
 ## Requirements

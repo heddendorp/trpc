@@ -41,30 +41,30 @@ TanStack Angular Query Integration for tRPC that provides reactive query capabil
 ### Prerequisites
 
 - Node.js 18+
-- pnpm 9.12.2+
+- Yarn 4.x
 
 ### Installation
 
 ```bash
-pnpm install
+yarn install
 ```
 
 ### Building
 
 ```bash
-pnpm build
+yarn build
 ```
 
 ### Running Tests
 
 ```bash
-pnpm test
+yarn test
 ```
 
 ### Publishing
 
 ```bash
-pnpm publish
+yarn publish
 ```
 
 ## Context7 Integration
@@ -103,7 +103,7 @@ The repository is structured as a monorepo with:
 - **Root**: Contains shared configuration and scripts
 - **packages/**: Contains the two Angular packages
 - **Build System**: Uses `tsdown` for building TypeScript packages
-- **Package Manager**: Uses `pnpm` with workspaces
+- **Package Manager**: Uses `yarn` with workspaces
 - **Publishing**: Uses `lerna` for coordinated publishing
 
 ## Star History
