@@ -3,7 +3,6 @@ import type {
   DefinedInitialDataInfiniteOptions,
   QueryClient,
   QueryFunction,
-  SkipToken,
   UndefinedInitialDataInfiniteOptions,
   UnusedSkipTokenInfiniteOptions,
 } from '@tanstack/angular-query-experimental';
@@ -142,7 +141,7 @@ interface UnusedSkipTokenTRPCInfiniteQueryOptionsOut<
 
 export interface TRPCInfiniteQueryOptions<TDef extends ResolverDef> {
   <TQueryFnData extends TDef['output'], TData = TQueryFnData>(
-    input: TDef['input'] | SkipToken,
+    input: TDef['input'],
     opts: DefinedTRPCInfiniteQueryOptionsIn<
       TDef['input'],
       TQueryFnData,
@@ -182,7 +181,7 @@ export interface TRPCInfiniteQueryOptions<TDef extends ResolverDef> {
     }>
   >;
   <TQueryFnData extends TDef['output'], TData = TQueryFnData>(
-    input: TDef['input'] | SkipToken,
+    input: TDef['input'],
     opts?: UndefinedTRPCInfiniteQueryOptionsIn<
       TDef['input'],
       TQueryFnData,
@@ -219,7 +218,7 @@ type AnyTRPCInfiniteQueryOptionsOut =
 export function trpcInfiniteQueryOptions(args: {
   input: unknown;
   query: typeof TRPCUntypedClient.prototype.query;
-  queryClient: QueryClient | (() => QueryClient);
+  queryClient: QueryClient;
   path: readonly string[];
   queryKey: TRPCQueryKey;
   opts: AnyTRPCInfiniteQueryOptionsIn;

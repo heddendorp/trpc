@@ -3,7 +3,6 @@ import type {
   DefinedInitialDataOptions,
   QueryClient,
   QueryFunction,
-  SkipToken,
   UndefinedInitialDataOptions,
   UnusedSkipTokenOptions,
 } from '@tanstack/angular-query-experimental';
@@ -24,7 +23,6 @@ import {
   buildQueryFromAsyncIterable,
   createTRPCOptionsResult,
   getClientArgs,
-  unwrapLazyArg,
 } from './utils';
 
 type ReservedOptions = 'queryKey' | 'queryFn' | 'queryHashFn' | 'queryHash';
@@ -100,7 +98,7 @@ interface UnusedSkipTokenTRPCQueryOptionsOut<TQueryFnData, TOutput, TError>
 
 export interface TRPCQueryOptions<TDef extends ResolverDef> {
   <TQueryFnData extends TDef['output'], TData = TQueryFnData>(
-    input: TDef['input'] | SkipToken,
+    input: TDef['input'],
     opts: DefinedTRPCQueryOptionsIn<
       TQueryFnData,
       TData,
@@ -136,7 +134,7 @@ export interface TRPCQueryOptions<TDef extends ResolverDef> {
     }>
   >;
   <TQueryFnData extends TDef['output'], TData = TQueryFnData>(
-    input: TDef['input'] | SkipToken,
+    input: TDef['input'],
     opts?: UndefinedTRPCQueryOptionsIn<
       TQueryFnData,
       TData,
@@ -171,13 +169,12 @@ type AnyTRPCQueryOptionsOut =
 export function trpcQueryOptions(args: {
   input: unknown;
   query: typeof TRPCUntypedClient.prototype.query;
-  queryClient: QueryClient | (() => QueryClient);
+  queryClient: QueryClient;
   path: readonly string[];
   queryKey: TRPCQueryKey;
   opts: AnyTRPCQueryOptionsIn;
 }): AnyTRPCQueryOptionsOut {
   const { input, query, path, queryKey, opts } = args;
-  const queryClient = unwrapLazyArg(args.queryClient);
 
   const inputIsSkipToken = input === skipToken;
 
@@ -198,7 +195,7 @@ export function trpcQueryOptions(args: {
     const result = await query(...getClientArgs(queryKey, actualOpts));
 
     if (isAsyncIterable(result)) {
-      return buildQueryFromAsyncIterable(result, queryClient, queryKey);
+      return buildQueryFromAsyncIterable(result, args.queryClient, queryKey);
     }
 
     return result;

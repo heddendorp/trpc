@@ -1,5 +1,4 @@
-import type { SkipToken } from '@tanstack/angular-query-experimental';
-import { hashKey, skipToken } from '@tanstack/angular-query-experimental';
+import { skipToken } from '@tanstack/angular-query-experimental';
 import type { TRPCClientErrorLike, TRPCUntypedClient } from '@trpc/client';
 import type { TRPCConnectionState } from '@trpc/client/unstable-internals';
 import type { Unsubscribable } from '@trpc/server/observable';
@@ -49,7 +48,7 @@ export interface TRPCSubscriptionOptions<TDef extends ResolverDef> {
     TRPCClientErrorLike<TDef>
   >;
   (
-    input: TDef['input'] | SkipToken,
+    input: TDef['input'],
     opts?: BaseTRPCSubscriptionOptionsIn<
       inferAsyncIterableYield<TDef['output']>,
       TRPCClientErrorLike<TDef>

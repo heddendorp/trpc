@@ -1,8 +1,4 @@
-import type {
-  MutationFunction,
-  QueryClient,
-  CreateMutationOptions,
-} from '@tanstack/angular-query-experimental';
+import type { MutationFunction, QueryClient, CreateMutationOptions } from '@tanstack/angular-query-experimental';
 import type { TRPCClientErrorLike, TRPCUntypedClient } from '@trpc/client';
 import type {
   DistributiveOmit,
@@ -17,8 +13,6 @@ import type {
 import {
   createTRPCOptionsResult,
   getClientArgs,
-  getMutationKeyInternal,
-  unwrapLazyArg,
 } from './utils';
 
 type ReservedOptions = 'mutationKey' | 'mutationFn';
@@ -88,13 +82,12 @@ type AnyTRPCMutationOptionsOut = TRPCMutationOptionsOut<
  */
 export function trpcMutationOptions(args: {
   mutate: typeof TRPCUntypedClient.prototype.mutation;
-  queryClient: QueryClient | (() => QueryClient);
+  queryClient: QueryClient;
   path: readonly string[];
   mutationKey: TRPCMutationKey;
   opts?: AnyTRPCMutationOptionsIn;
 }): AnyTRPCMutationOptionsOut {
   const { mutate, path, mutationKey, opts } = args;
-  const queryClient = unwrapLazyArg(args.queryClient);
 
   const mutationFn: MutationFunction<unknown, unknown> = async (input) => {
     const actualOpts = {

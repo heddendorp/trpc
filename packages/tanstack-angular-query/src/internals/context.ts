@@ -1,4 +1,5 @@
 import type { QueryClient } from '@tanstack/angular-query-experimental';
+import { QueryClient as QueryClientService } from '@tanstack/angular-query-experimental';
 import type { TRPCClient } from '@trpc/client';
 import type { AnyTRPCRouter } from '@trpc/server';
 import { InjectionToken, inject, Injectable, type EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
@@ -25,7 +26,7 @@ export function provideTRPC<TRouter extends AnyTRPCRouter>(
     {
       provide: TRPC_OPTIONS_PROXY,
       useFactory: () => {
-        const qc = queryClient ?? inject(QueryClient);
+        const qc = queryClient ?? inject(QueryClientService);
         return createTRPCOptionsProxy({
           client,
           queryClient: qc,

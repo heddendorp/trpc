@@ -4,7 +4,7 @@ import type {
   TRPCClientErrorLike,
   TRPCRequestOptions,
 } from '@trpc/client';
-import { getUntypedClient, TRPCUntypedClient } from '@trpc/client';
+import { getUntypedClient, type TRPCUntypedClient } from '@trpc/client';
 import type {
   AnyTRPCProcedure,
   AnyTRPCRootTypes,
@@ -42,7 +42,6 @@ import type {
 import {
   getMutationKeyInternal,
   getQueryKeyInternal,
-  unwrapLazyArg,
 } from './utils';
 
 export interface DecorateRouterKeyable {
@@ -279,7 +278,7 @@ export type TRPCOptionsProxy<TRouter extends AnyTRPCRouter> =
     DecorateRouterKeyable;
 
 export interface TRPCOptionsProxyOptionsBase {
-  queryClient: QueryClient | (() => QueryClient);
+  queryClient: QueryClient;
   overrides?: {
     mutations?: MutationOptionsOverride;
   };
@@ -315,7 +314,7 @@ export type TRPCOptionsProxyOptions<TRouter extends AnyTRPCRouter> =
 export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
   opts: TRPCOptionsProxyOptions<TRouter>,
 ): TRPCOptionsProxy<TRouter> {
-  const { queryClient, overrides } = opts;
+  const { queryClient } = opts;
 
   const client = (() => {
     if ('client' in opts) {
@@ -358,7 +357,11 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
 
   return createTRPCRecursiveProxy(({ path, args }) => {
     const pathCopy = [...path];
-    const lastPart = pathCopy.pop()!;
+    const lastPart = pathCopy.pop();
+    
+    if (!lastPart) {
+      throw new Error('Invalid path');
+    }
 
     const input = args[0];
     const opts = args[1];
@@ -367,9 +370,10 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
     const mutationKey = getMutationKeyInternal(pathCopy);
 
     if (lastPart === 'queryOptions') {
+      const queryFn = client.query.bind(client);
       return trpcQueryOptions({
         input,
-        query: client.query,
+        query: queryFn,
         queryClient,
         path: pathCopy,
         queryKey,
@@ -378,9 +382,10 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
     }
 
     if (lastPart === 'infiniteQueryOptions') {
+      const queryFn = client.query.bind(client);
       return trpcInfiniteQueryOptions({
         input,
-        query: client.query,
+        query: queryFn,
         queryClient,
         path: pathCopy,
         queryKey: getQueryKeyInternal(pathCopy, input, 'infinite'),
@@ -389,8 +394,9 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
     }
 
     if (lastPart === 'mutationOptions') {
+      const mutateFn = client.mutation.bind(client);
       return trpcMutationOptions({
-        mutate: client.mutation,
+        mutate: mutateFn,
         queryClient,
         path: pathCopy,
         mutationKey,
@@ -399,9 +405,10 @@ export function createTRPCOptionsProxy<TRouter extends AnyTRPCRouter>(
     }
 
     if (lastPart === 'subscriptionOptions') {
+      const subscribeFn = client.subscription.bind(client);
       return trpcSubscriptionOptions({
         input,
-        subscribe: client.subscription,
+        subscribe: subscribeFn,
         path: pathCopy,
         queryKey,
         opts,

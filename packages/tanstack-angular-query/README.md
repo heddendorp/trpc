@@ -2,6 +2,8 @@
 
 <a href="https://trpc.io/docs/client/tanstack-angular-query/setup"><strong>TanStack Angular Query Integration for tRPC</strong></a> • <a href="https://trpc.io/docs"><strong>Read the docs</strong></a>
 
+> ⚠️ **Experimental Package** - This package is currently experimental and depends on `@tanstack/angular-query-experimental`. API may change in future versions.
+
 ## Installation
 
 ```bash
@@ -107,6 +109,23 @@ export class UserListComponent {
 - **TanStack Query integration**: Leverages TanStack Query's powerful caching and synchronization
 - **SSR compatible**: Works with Angular Universal
 - **Suspense support**: Compatible with Angular's upcoming Suspense features
+
+## Current Status
+
+This package provides a complete Angular adapter for tRPC with TanStack Query integration. The implementation includes:
+
+- ✅ Angular DI providers (`provideTRPC`, `injectTRPC`, `injectTRPCClient`)
+- ✅ Query options proxy with type-safe procedure calls
+- ✅ Support for queries, mutations, infinite queries, and subscriptions
+- ✅ Angular-specific subscription handling with signals
+- ✅ Type-safe key generation and filtering
+- ✅ Complete TypeScript type definitions
+
+## Limitations
+
+- Depends on experimental `@tanstack/angular-query-experimental` package
+- Some advanced features may require additional testing
+- API may change as Angular Query moves out of experimental status
 
 ## Documentation
 
